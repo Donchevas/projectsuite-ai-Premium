@@ -133,10 +133,10 @@ const Reports: React.FC = () => {
         setCurrentSlideIndex(0);
 
         try {
-            if (!process.env.API_KEY) {
-                throw new Error("API_KEY no está configurada.");
+            if (!process.env.NEXT_PUBLIC_API_KEY) {
+                throw new Error("La variable de entorno NEXT_PUBLIC_API_KEY no está configurada.");
             }
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+            const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_API_KEY });
             
             const project = PROJECTS.find(p => p.id === selectedProjectIdForPPT);
             const risks = RISKS.filter(r => r.projectId === selectedProjectIdForPPT);
