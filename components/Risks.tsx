@@ -149,8 +149,8 @@ const Risks: React.FC = () => {
         setPotentialRisks([]);
     
         try {
-            if (!process.env.NEXT_PUBLIC_API_KEY) throw new Error("La variable de entorno NEXT_PUBLIC_API_KEY no está configurada.");
-            const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_API_KEY });
+            if (!process.env.API_KEY) throw new Error("API_KEY no está configurada.");
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
             const projectsData = PROJECTS.map(p => `ID: ${p.id}, Nombre: ${p.name}, Estado: ${p.status}, Progreso: ${p.progress}%, Costo: ${p.costStatus}`).join('\n');
             const tasksData = TASKS.map(t => `ProyectoID: ${t.projectId}, Tarea: ${t.name}, Estado: ${t.status}, Es Crítica: ${t.isCritical}`).join('\n');
@@ -217,7 +217,7 @@ const Risks: React.FC = () => {
         } catch (err) {
             console.error("Error analyzing risks:", err);
             const msg = (err instanceof Error) ? err.message : 'Ocurrió un error desconocido.';
-            setAnalysisError(`No se pudo completar el análisis. ${msg}`);
+            setAnalysisError(`No se pudo completar el análisis. Error: ${msg}`);
         } finally {
             setIsAnalyzing(false);
         }
