@@ -82,8 +82,8 @@ const IaTools: React.FC = () => {
         setSummary('');
 
         try {
-            if (!process.env.API_KEY) throw new Error("API_KEY no está configurada.");
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+            if (!import.meta.env.VITE_API_KEY) throw new Error("La variable de entorno VITE_API_KEY no está configurada.");
+            const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY as string });
             const prompt = `Eres un asistente experto en gestión de proyectos. Analiza el siguiente texto y genera un resumen ejecutivo conciso en español. El resumen debe destacar: Decisiones Clave, Acciones Pendientes y Riesgos. Usa viñetas y negritas para una lectura rápida. El texto es:\n\n---\n\n${inputText}`;
 
             const response = await ai.models.generateContent({ model: 'gemini-2.5-flash', contents: prompt });
@@ -108,14 +108,14 @@ const IaTools: React.FC = () => {
         setScopeAnalysis('');
 
         try {
-            if (!process.env.API_KEY) throw new Error("API_KEY no está configurada.");
+            if (!import.meta.env.VITE_API_KEY) throw new Error("La variable de entorno VITE_API_KEY no está configurada.");
             
             const currentProject = PROJECTS.find(p => p.id === selectedProjectId);
             const baselineProject = PROJECTS_BASELINE.find(p => p.id === selectedProjectId);
 
             if (!currentProject || !baselineProject) throw new Error("No se encontraron los datos del proyecto o su línea base.");
 
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+            const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY as string });
             
             const prompt = `Como analista de proyectos experto, compara la planificación inicial (Línea Base) con el estado actual del proyecto. Cuantifica el impacto de las desviaciones (scope creep) y proporciona un análisis claro en español.
 
